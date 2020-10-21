@@ -1,2 +1,2 @@
-var { sayHello } = require('../dist/bundle.umd.js');
+var { sayHello } = require('./dist/bundle.umd.js');
 sayHello('wuhonglei');
