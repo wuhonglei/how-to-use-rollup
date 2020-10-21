@@ -190,3 +190,74 @@ export default {
 ```
 
 ### 四、如何使用 rollup 结合 babel transform 转换 ES6 代码
+当代码中使用了 ES6 语法和新的 API 时，需要使用 babel 进行 transform 和 polyfill。
+因此需要进行如下设置：
+
+rollup 配置：
+```js
+import { terser } from 'rollup-plugin-terser';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import babel from '@rollup/plugin-babel';
+
+
+
+export default {
+    input: 'src/main.js',
+    output: [{
+        file: './dist/bundle.umd.js',
+        format: 'umd',
+        name: 'sayHello',
+        globals: {
+            'lodash-es': '_'
+        }
+    }, {
+        file: './dist/bundle.umd.min.js',
+        format: 'umd',
+        name: 'sayHello',
+        plugins: [
+            terser()
+        ],
+        globals: {
+            'lodash-es': '_'
+        }
+    }, {
+        file: './dist/bundle.esm.js',
+        format: 'esm'
+    }, {
+        file: './dist/bundle.esm.min.js',
+        format: 'esm',
+        plugins: [
+            terser()
+        ]
+    }],
+    plugins: [
+        nodeResolve(),
+        babel({
+            babelHelpers: 'bundled',
+            exclude: 'node_modules/**', // 只编译我们的源代码
+        })
+    ],
+    external: ['lodash-es']
+};
+```
+
+2. babel 配置
+```json
+// src/.babelrc.json
+{
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "useBuiltIns": "usage",
+                "corejs": 3,
+                "modules": false
+            }
+        ]
+    ]
+}
+```
+
+注意：
+1. 配置文件中指明了 `"modules": false`, 是为了避免 babel 将 ESM 转为 CommonJS。
+2. `.babelrc.json` 是目录级的配置文件，和项目配置文件 `babel.config.json` 作用域不同，对于 npm 模块来说，通常会包含 test 测试目录，因此需要针对不同目录设置不同的 babel 方案。

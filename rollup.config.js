@@ -1,5 +1,8 @@
 import { terser } from 'rollup-plugin-terser';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
+import babel from '@rollup/plugin-babel';
+
+
 
 export default {
     input: 'src/main.js',
@@ -31,7 +34,11 @@ export default {
         ]
     }],
     plugins: [
-        nodeResolve()
+        nodeResolve(),
+        babel({
+            babelHelpers: 'bundled',
+            exclude: 'node_modules/**', // 只编译我们的源代码
+        })
     ],
     external: ['lodash-es']
 };
