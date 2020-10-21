@@ -6,14 +6,20 @@ export default {
     output: [{
         file: './dist/bundle.umd.js',
         format: 'umd',
-        name: 'sayHello'
+        name: 'sayHello',
+        globals: {
+            'lodash-es': '_'
+        }
     }, {
         file: './dist/bundle.umd.min.js',
         format: 'umd',
         name: 'sayHello',
         plugins: [
             terser()
-        ]
+        ],
+        globals: {
+            'lodash-es': '_'
+        }
     }, {
         file: './dist/bundle.esm.js',
         format: 'esm'
@@ -26,5 +32,6 @@ export default {
     }],
     plugins: [
         nodeResolve()
-    ]
+    ],
+    external: ['lodash-es']
 };
