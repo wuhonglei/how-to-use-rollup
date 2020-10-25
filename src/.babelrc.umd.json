@@ -5,7 +5,10 @@
             {
                 "useBuiltIns": "usage",
                 "corejs": 3,
-                "modules": false
+                "modules": false,
+                "targets": {
+                    "node": "10"
+                }
             }
         ]
     ]

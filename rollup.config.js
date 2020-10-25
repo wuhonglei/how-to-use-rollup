@@ -1,8 +1,17 @@
 import { terser } from 'rollup-plugin-terser';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-import babel from '@rollup/plugin-babel';
+import { getBabelOutputPlugin } from '@rollup/plugin-babel';
+const path = require('path');
 
+const babelPluginForUmd = getBabelOutputPlugin({
+    configFile: path.resolve(__dirname, './src/.babelrc.umd.json'),
+    allowAllFormats: true
+});
 
+const babelPluginForEsm = getBabelOutputPlugin({
+    configFile: path.resolve(__dirname, './src/.babelrc.esm.json'),
+    allowAllFormats: true
+});
 
 export default {
     input: 'src/main.js',
@@ -10,6 +19,9 @@ export default {
         file: './dist/bundle.umd.js',
         format: 'umd',
         name: 'sayHello',
+        plugins: [
+            babelPluginForUmd
+        ],
         globals: {
             'lodash-es': '_'
         }
@@ -18,6 +30,7 @@ export default {
         format: 'umd',
         name: 'sayHello',
         plugins: [
+            babelPluginForUmd,
             terser()
         ],
         globals: {
@@ -25,20 +38,20 @@ export default {
         }
     }, {
         file: './dist/bundle.esm.js',
-        format: 'esm'
+        format: 'esm',
+        plugins: [
+            babelPluginForEsm,
+        ]
     }, {
         file: './dist/bundle.esm.min.js',
         format: 'esm',
         plugins: [
-            terser()
+            babelPluginForEsm,
+            terser(),
         ]
     }],
     plugins: [
         nodeResolve(),
-        babel({
-            babelHelpers: 'bundled',
-            exclude: 'node_modules/**', // 只编译我们的源代码
-        })
     ],
-    external: ['lodash-es']
+    external: ['lodash-es', /core-js/]
 };
