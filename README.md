@@ -261,3 +261,67 @@ export default {
 注意：
 1. 配置文件中指明了 `"modules": false`, 是为了避免 babel 将 ESM 转为 CommonJS。
 2. `.babelrc.json` 是目录级的配置文件，和项目配置文件 `babel.config.json` 作用域不同，对于 npm 模块来说，通常会包含 test 测试目录，因此需要针对不同目录设置不同的 babel 方案。
+
+
+### 五、ESM 和 CommonJS 使用不同的 babel 配置
+ESM 运行在浏览器，CommonJS 运行在 Node 环境，两者的兼容性不一致，因此需要指明不同的 babel 配置。
+
+```js
+import { terser } from 'rollup-plugin-terser';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import { getBabelOutputPlugin } from '@rollup/plugin-babel';
+const path = require('path');
+
+const babelPluginForUmd = getBabelOutputPlugin({
+    configFile: path.resolve(__dirname, './src/.babelrc.umd.json'),
+    allowAllFormats: true
+});
+
+const babelPluginForEsm = getBabelOutputPlugin({
+    configFile: path.resolve(__dirname, './src/.babelrc.esm.json'),
+    allowAllFormats: true
+});
+
+export default {
+    input: 'src/main.js',
+    output: [{
+        file: './dist/bundle.umd.js',
+        format: 'umd',
+        name: 'sayHello',
+        plugins: [
+            babelPluginForUmd
+        ],
+        globals: {
+            'lodash-es': '_'
+        }
+    }, {
+        file: './dist/bundle.umd.min.js',
+        format: 'umd',
+        name: 'sayHello',
+        plugins: [
+            babelPluginForUmd,
+            terser()
+        ],
+        globals: {
+            'lodash-es': '_'
+        }
+    }, {
+        file: './dist/bundle.esm.js',
+        format: 'esm',
+        plugins: [
+            babelPluginForEsm,
+        ]
+    }, {
+        file: './dist/bundle.esm.min.js',
+        format: 'esm',
+        plugins: [
+            babelPluginForEsm,
+            terser(),
+        ]
+    }],
+    plugins: [
+        nodeResolve(),
+    ],
+    external: ['lodash-es', /core-js/]
+};
+```

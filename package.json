@@ -1,35 +1,35 @@
 {
-  "name": "how-to-use-rollup",
-  "version": "1.0.1",
-  "description": "该项目用于介绍如何使用 `rollup` 打包 library，涉及代码压缩、babel、external、3rd-npm 的打包。",
-  "main": "./dist/bundle.umd.min.js",
-  "module": "./dist/bundle.esm.min.js",
-  "type": "module",
-  "scripts": {
-    "build": "rollup -c ./rollup.config.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "rollup",
-    "use",
-    "library"
-  ],
-  "author": "wuhonglei",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/wuhonglei/how-to-use-rollup.git"
-  },
-  "license": "MIT",
-  "devDependencies": {
-    "@babel/core": "^7.12.3",
-    "@babel/preset-env": "^7.12.1",
-    "@rollup/plugin-babel": "^5.2.1",
-    "@rollup/plugin-node-resolve": "^9.0.0",
-    "rollup": "^2.32.1",
-    "rollup-plugin-terser": "^7.0.2"
-  },
-  "dependencies": {
-    "core-js": "^3.6.5",
-    "lodash-es": "^4.17.15"
-  }
+    "name": "how-to-use-rollup",
+    "version": "1.0.2",
+    "description": "该项目用于介绍如何使用 `rollup` 打包 library，涉及代码压缩、babel、external、3rd-npm 的打包。",
+    "main": "./dist/bundle.umd.min.js",
+    "module": "./dist/bundle.esm.min.js",
+    "type": "module",
+    "scripts": {
+        "build": "rollup -c ./rollup.config.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "rollup",
+        "use",
+        "library"
+    ],
+    "author": "wuhonglei",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/wuhonglei/how-to-use-rollup.git"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "@babel/core": "^7.12.3",
+        "@babel/preset-env": "^7.12.1",
+        "@rollup/plugin-babel": "^5.2.1",
+        "@rollup/plugin-node-resolve": "^9.0.0",
+        "rollup": "^2.32.1",
+        "rollup-plugin-terser": "^7.0.2"
+    },
+    "dependencies": {
+        "core-js": "^3.6.5",
+        "lodash-es": "^4.17.15"
+    }
 }
