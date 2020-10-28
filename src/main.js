@@ -1,8 +1,8 @@
 import { print } from './helper.js';
-import { isString } from 'lodash-es';
+import _ from 'lodash';
 
 export function sayHello(name) {
-    if (isString(name) && name.startsWith('wu')) {
+    if (_.isString(name) && name.startsWith('wu')) {
         console.info(`hello ${print?.(name)}`);
     }
 }

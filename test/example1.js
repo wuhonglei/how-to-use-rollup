@@ -1,5 +1,5 @@
-// var { sayHello } = require('./dist/bundle.umd.js');
-// sayHello('wuhonglei');
+var { sayHello } = require('how-to-use-rollup');
+sayHello('wuhonglei');
 
-let person = {};
-console.info(person?.name)
+// let person = {};
+// console.info(person?.name)

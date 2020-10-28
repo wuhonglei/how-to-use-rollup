@@ -34,7 +34,8 @@ export default {
             terser()
         ],
         globals: {
-            'lodash-es': '_'
+            'lodash-es': '_',
+            'lodash': '_'
         }
     }, {
         file: './dist/bundle.esm.js',
@@ -53,5 +54,5 @@ export default {
     plugins: [
         nodeResolve(),
     ],
-    external: ['lodash-es', /core-js/]
+    external: [/lodash/, /core-js/]
 };
